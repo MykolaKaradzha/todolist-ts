@@ -20,12 +20,12 @@ export const CheckBox: React.FC<CheckBoxProps> = (
 
 
     return (
-        <div>
+        <>
             <label>
                 <input type="checkbox" onChange={onChangeHandler} className={finalCheckBoxClass} {...restProps} />
                 {children && <span className={finalSpanClass}>{children}</span>}
             </label>
-        </div>
+        </>
     );
 };
 

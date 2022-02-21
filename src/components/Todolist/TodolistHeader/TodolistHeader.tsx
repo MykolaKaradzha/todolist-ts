@@ -1,11 +1,14 @@
 import React from "react";
 import {AddTaskForm} from "./AddTaskForm/AddTaskForm";
 
-type propsType = { title: string }
+type PropsType = {
+    title: string
+    addTask: (newTitle: string) => void
+}
 
-export const TodolistHeader = (props: propsType) => {
+export const TodolistHeader: React.FC<PropsType> = ({title, addTask}) => {
     return <>
-        <h3>{props.title}</h3>
-        <AddTaskForm/>
+        <h3>{title}</h3>
+        <AddTaskForm addTask={addTask}/>
     </>
 }

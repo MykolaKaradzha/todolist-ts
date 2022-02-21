@@ -8,7 +8,7 @@ type InputProps = DefaultInputAttributesProps & {
     error?: string
     spanClassName?: string
     onChangeText?: (newText: string) => void
-    onEnterPress: () => void
+    onEnterPress?: () => void
 }
 
 
@@ -29,14 +29,14 @@ export const Input: React.FC<InputProps> = (
         onEnterPress && event.key === "Enter" && onEnterPress()
     }
     return (
-        <div>
+        <>
             <input type="text"
                    onChange={onChangeHandler}
                    className={finalInputClass}
                    onKeyPress={onKeyPressHandler}
                    {...restProps}/>
             {error && <span className={s.errorText}>{error}</span>}
-        </div>
+        </>
     );
 };
 

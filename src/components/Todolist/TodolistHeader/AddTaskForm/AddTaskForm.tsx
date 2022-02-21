@@ -1,8 +1,34 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
+import {Input} from "../../../UniversalComponents/Input/Input";
+import {Buttons} from "../../TasksList/Buttons/Buttons";
+import {Button} from "../../../UniversalComponents/Button/Button";
 
-export const AddTaskForm = () => {
+type PropsType = {
+    addTask: (newTitle: string) => void
+}
+
+export const AddTaskForm: React.FC<PropsType> = ({addTask}) => {
+    const [title, setTitle] = useState<string>('')
+    const [error, setError] = useState<string>('')
+
+
+    const onClickButtonHandler = () => {
+        if (title.trim()) {
+            addTask(title)
+            setTitle('')
+            setError('')
+        } else {
+            setError('Insert title, bro!')
+        }
+
+    }
+    const onKeyPressHandler = () => {
+        onClickButtonHandler()
+    }
+
+
     return <div>
-        <input type="text"/>
-        <button>+</button>
+        <Input value={title} onChangeText={setTitle} onEnterPress={onKeyPressHandler} error={error} placeholder={'enter your task here'}/>
+        <Button  error={error} onClick={onClickButtonHandler}>+</Button>
     </div>
 }
