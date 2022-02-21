@@ -1,16 +1,20 @@
 import React, {useState} from 'react';
 import './App.css';
-import {taskType, Todolist} from "./components/Todolist/Todolist";
+import {Todolist} from "./components/Todolist/Todolist";
 
+export type taskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
 
-
-function App() {
-    let tasks : Array<taskType> = [
+const App: React.FC = () => {
+    const [tasks, setTasks] = useState<Array<taskType>>([
         {id: 1, title: "HTML&CSS", isDone: true},
         {id: 2, title: "JS", isDone: true},
         {id: 3, title: "React", isDone: false},
         {id: 4, title: "Vue", isDone: false},
-    ]
+    ])
     return (
         <div className="App">
             <Todolist title={"What to learn"}

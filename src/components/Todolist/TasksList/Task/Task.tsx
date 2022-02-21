@@ -1,5 +1,6 @@
 import React from "react";
-import {taskType} from "../Todolist/Todolist";
+import {taskType} from "../../../../App";
+
 
 type propsType = taskType
 

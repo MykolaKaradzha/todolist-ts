@@ -1,13 +1,10 @@
 import React from "react";
-import {TodolistHeader} from "../TodolistHeader/TodolistHeader";
-import {TasksList} from "../TasksList/TasksList";
+import {TodolistHeader} from "./TodolistHeader/TodolistHeader";
+import {TasksList} from "./TasksList/TasksList";
+import {taskType} from "../../App";
 
 
-export type taskType = {
-    id: number
-    title: string
-    isDone: boolean
-}
+
 
 type propsType = {
     title: string
@@ -15,7 +12,7 @@ type propsType = {
 
 }
 
-export const Todolist = (props: propsType) => {
+export const Todolist:React.FC<propsType> = (props) => {
 
     return <div>
         <TodolistHeader title={props.title}/>

@@ -1,5 +1,5 @@
 import React from "react";
-import {AddTaskForm} from "../AddTaskForm/AddTaskForm";
+import {AddTaskForm} from "./AddTaskForm/AddTaskForm";
 
 type propsType = { title: string }
 
