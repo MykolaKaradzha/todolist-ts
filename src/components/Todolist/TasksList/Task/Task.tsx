@@ -11,17 +11,17 @@ type PropsType = taskType & {
 }
 
 export const Task:React.FC<PropsType> = ({title, id, isDone, removeTask, changeStatus}) => {
+    const completedTasksClass = isDone ? s.completed : ''
     const onClickRemoveTaskHandler = () => {
         removeTask(id)
     }
-
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         changeStatus(id, event.currentTarget.checked)
     }
     return (
-        <li>
+        <li className={completedTasksClass}>
             <CheckBox  onChange={onChangeHandler} checked={isDone}>{title}</CheckBox>
-            <Button className={s.removeTaskButton} onClick={onClickRemoveTaskHandler}>x</Button>
+            <Button className={s.removeTaskButton} onClick={onClickRemoveTaskHandler}>X</Button>
         </li>
         )
 }

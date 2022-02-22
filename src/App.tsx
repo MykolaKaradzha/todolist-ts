@@ -8,8 +8,11 @@ export type taskType = {
     title: string
     isDone: boolean
 }
+export type filterType = "all" | "active" | "completed"
+
 
 const App: React.FC = () => {
+    // task manipulation
     const [tasks, setTasks] = useState<Array<taskType>>([
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
@@ -17,7 +20,6 @@ const App: React.FC = () => {
         {id: v1(), title: "Vue", isDone: false},
     ])
     console.log(tasks)
-
     const addTask = (newTitle: string) => {
         setTasks(
             [{id: v1(), title: newTitle, isDone: false}, ...tasks]
@@ -26,22 +28,41 @@ const App: React.FC = () => {
     const removeTask = (id: string) => {
         setTasks(tasks.filter(task => task.id !== id))
     }
-    const changeStatus = (id: string, isDone: boolean) => {
-        const task = tasks.find(task => task.id === id);
-        if (task) {
-            task.isDone = isDone
-            setTasks([...tasks])
-        };
 
+    //function for checkbox
+    const changeStatus = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(task=> task.id === id ? {...task, isDone: isDone} : task))
     }
+
+    //for filter buttons
+    const [filter, setFilter] = useState<filterType>('all')
+    const filterTasks = () => {
+        switch (filter) {
+            case "completed":
+                return tasks.filter(task => task.isDone)
+            case "active":
+                return tasks.filter(task => !task.isDone)
+            default:
+                return tasks;
+        }
+    }
+    const filteredTasks = filterTasks();
+
+    // for collapsable tasks
+    const [collapsed, setCollapsed] = useState<boolean>(true)
+
 
     return (
         <div className="App">
             <Todolist title={"What to learn"}
-                      tasks={tasks}
+                      tasks={filteredTasks}
                       addTask={addTask}
                       removeTask={removeTask}
                       changeStatus={changeStatus}
+                      setFilter={setFilter}
+                      filter={filter}
+                      setCollapsed={setCollapsed}
+                      collapsed={collapsed}
             />
             {/*<Todolist title={"Cartoons"} tasks={tasks2}/>*/}
             {/*<Todolist title={"Movies"} tasks={tasks3}/>*/}
