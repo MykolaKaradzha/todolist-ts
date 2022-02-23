@@ -9,9 +9,19 @@ export type taskType = {
     isDone: boolean
 }
 export type filterType = "all" | "active" | "completed"
+type todolistProps = {
+    id: string
+    title: string
+    filter: filterType
+}
 
 
 const App: React.FC = () => {
+    // Todolists
+    const [todolists, setTodolists] = useState<Array<todolistProps>>([
+        {id: v1(), title: "What to learn", filter: "active"},
+        {id: v1(), title: "What to watch", filter: "completed"}
+    ])
     // task manipulation
     const [tasks, setTasks] = useState<Array<taskType>>([
         {id: v1(), title: "HTML&CSS", isDone: true},
@@ -35,8 +45,7 @@ const App: React.FC = () => {
     }
 
     //for filter buttons
-    const [filter, setFilter] = useState<filterType>('all')
-    const filterTasks = () => {
+    const filterTasks = (filter:filterType) => {
         switch (filter) {
             case "completed":
                 return tasks.filter(task => task.isDone)
@@ -46,24 +55,32 @@ const App: React.FC = () => {
                 return tasks;
         }
     }
-    const filteredTasks = filterTasks();
+    const changeFilter = (filter: filterType, todolistID: string) => {
+        setTodolists(todolists.map(todolist => todolist.id === todolistID ? {...todolist, filter:filter} : todolist))
 
-    // for collapsable tasks
-    const [collapsed, setCollapsed] = useState<boolean>(true)
+
+    }
+
+
 
 
     return (
         <div className="App">
-            <Todolist title={"What to learn"}
-                      tasks={filteredTasks}
-                      addTask={addTask}
-                      removeTask={removeTask}
-                      changeStatus={changeStatus}
-                      setFilter={setFilter}
-                      filter={filter}
-                      setCollapsed={setCollapsed}
-                      collapsed={collapsed}
-            />
+            {todolists.map(todolist => {
+                const filteredTasks = filterTasks(todolist.filter)
+                return <Todolist key={todolist.id}
+                                 todolistID={todolist.id}
+                                 title={todolist.title}
+                                 tasks={filteredTasks}
+                                 addTask={addTask}
+                                 removeTask={removeTask}
+                                 changeStatus={changeStatus}
+                                 changeFilter={changeFilter}
+                                 filter={todolist.filter}
+
+                />
+            })}
+
             {/*<Todolist title={"Cartoons"} tasks={tasks2}/>*/}
             {/*<Todolist title={"Movies"} tasks={tasks3}/>*/}
         </div>

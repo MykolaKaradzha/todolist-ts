@@ -4,19 +4,20 @@ import {Button} from "../../../UniversalComponents/Button/Button";
 import s from "./Buttons.module.css"
 
 type PropsType = {
-    setFilter: (filter:filterType) => void
+    todolistID: string
+    changeFilter: (filter:filterType, todolistID: string) => void
     filter: filterType
 }
 
 
-export const Buttons: React.FC<PropsType> = ({filter, setFilter}) => {
+export const Buttons: React.FC<PropsType> = ({filter, changeFilter, todolistID}) => {
     const allButtonClass = filter === "all" ? s.activeFilter : ""
     const activeButtonClass = filter === "active" ? s.activeFilter : ""
     const completedButtonClass = filter === "completed" ? s.activeFilter : ""
-    const onClickFilterButtonHandler = (filter:filterType) => () => setFilter(filter)
+    const onClickFilterButtonHandler = (filter:filterType, todolistID: string) => () => changeFilter(filter, todolistID)
     return <div>
-        <Button onClick={onClickFilterButtonHandler("all")} className={allButtonClass}>All</Button>
-        <Button onClick={onClickFilterButtonHandler("active")} className={activeButtonClass}>Active</Button>
-        <Button onClick={onClickFilterButtonHandler("completed")} className={completedButtonClass}>Completed</Button>
+        <Button onClick={onClickFilterButtonHandler("all", todolistID)} className={allButtonClass}>All</Button>
+        <Button onClick={onClickFilterButtonHandler("active", todolistID)} className={activeButtonClass}>Active</Button>
+        <Button onClick={onClickFilterButtonHandler("completed", todolistID)} className={completedButtonClass}>Completed</Button>
     </div>
 }
