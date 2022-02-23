@@ -3,8 +3,12 @@ import {TodolistHeader} from "./TodolistHeader/TodolistHeader";
 import {TasksList} from "./TasksList/TasksList";
 import {filterType, taskType} from "../../App";
 import {Button} from "../UniversalComponents/Button/Button";
+import styled from "styled-components";
 
-
+//styles
+const TodolistWrapper = styled.div`
+  margin-left: 50px;
+`
 
 
 type propsType = {
@@ -28,7 +32,7 @@ export const Todolist:React.FC<propsType> = (
     const collapsedHandler = () => {
         setCollapsed(!collapsed)
     }
-    return <div>
+    return <TodolistWrapper>
         <TodolistHeader title={title} addTask={addTask}/>
         <Button onClick={collapsedHandler}>Show Tasks</Button>
         {!collapsed && <TasksList todolistID={todolistID}
@@ -39,5 +43,5 @@ export const Todolist:React.FC<propsType> = (
             filter={filter}
 
         />}
-    </div>
+    </TodolistWrapper>
 }

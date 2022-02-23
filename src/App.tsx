@@ -1,8 +1,22 @@
 import React, {useState} from 'react';
-import './App.css';
 import {Todolist} from "./components/Todolist/Todolist";
 import { v1 } from 'uuid';
+import styled from "styled-components";
 
+
+
+
+//styles
+const AppWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  color: white;
+  background-color: #909096;
+`
+
+//types
 export type taskType = {
     id: string
     title: string
@@ -15,15 +29,16 @@ type todolistProps = {
     filter: filterType
 }
 
-
 const App: React.FC = () => {
     // Todolists
     const [todolists, setTodolists] = useState<Array<todolistProps>>([
         {id: v1(), title: "What to learn", filter: "active"},
         {id: v1(), title: "What to watch", filter: "completed"}
     ])
+
     // task manipulation
-    const [tasks, setTasks] = useState<Array<taskType>>([
+    const [tasks, setTasks] = useState([
+
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
         {id: v1(), title: "React", isDone: false},
@@ -56,16 +71,13 @@ const App: React.FC = () => {
         }
     }
     const changeFilter = (filter: filterType, todolistID: string) => {
-        setTodolists(todolists.map(todolist => todolist.id === todolistID ? {...todolist, filter:filter} : todolist))
-
-
+        setTodolists(todolists.map(
+            todolist => todolist.id === todolistID ? {...todolist, filter:filter} : todolist))
     }
 
 
-
-
     return (
-        <div className="App">
+        <AppWrapper>
             {todolists.map(todolist => {
                 const filteredTasks = filterTasks(todolist.filter)
                 return <Todolist key={todolist.id}
@@ -80,10 +92,7 @@ const App: React.FC = () => {
 
                 />
             })}
-
-            {/*<Todolist title={"Cartoons"} tasks={tasks2}/>*/}
-            {/*<Todolist title={"Movies"} tasks={tasks3}/>*/}
-        </div>
+        </AppWrapper>
     );
 }
 
