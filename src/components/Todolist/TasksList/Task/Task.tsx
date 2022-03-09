@@ -6,17 +6,19 @@ import {CheckBox} from "../../../UniversalComponents/CheckBox/CheckBox";
 
 
 type PropsType = taskType & {
-    removeTask: (id: string) => void
-    changeStatus: (id: string, isDone: boolean) => void
+    todolistID: string
+    removeTask: (id:string, todolistID: string) => void
+    changeStatus: (id: string, isDone: boolean, todolistID: string) => void
 }
 
-export const Task:React.FC<PropsType> = ({title, id, isDone, removeTask, changeStatus}) => {
+export const Task:React.FC<PropsType> = ({title, id, isDone,
+                                             removeTask, changeStatus, todolistID}) => {
     const completedTasksClass = isDone ? s.completed : ''
     const onClickRemoveTaskHandler = () => {
-        removeTask(id)
+        removeTask(id, todolistID)
     }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        changeStatus(id, event.currentTarget.checked)
+        changeStatus(id, event.currentTarget.checked, todolistID)
     }
     return (
         <li className={completedTasksClass}>

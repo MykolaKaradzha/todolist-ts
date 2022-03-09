@@ -3,17 +3,18 @@ import {Input} from "../../../UniversalComponents/Input/Input";
 import {Button} from "../../../UniversalComponents/Button/Button";
 
 type PropsType = {
-    addTask: (newTitle: string) => void
+    todolistID: string
+    addTask: (newTitle: string, todolistID: string) => void
 }
 
-export const AddTaskForm: React.FC<PropsType> = ({addTask}) => {
+export const AddTaskForm: React.FC<PropsType> = ({addTask, todolistID}) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
 
     const onClickButtonHandler = () => {
         if (title.trim()) {
-            addTask(title.trim())
+            addTask(title.trim(), todolistID)
             setTitle('')
         } else {
             setError('Insert title, bro!')
