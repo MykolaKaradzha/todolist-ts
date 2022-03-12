@@ -11,14 +11,16 @@ type PropsTypes = {
     changeStatus: (id: string, isDone: boolean, todolistID: string) => void
     changeFilter: (filter:filterType, todolistID: string) => void
     filter: filterType
+    changeTaskTitle: (todolistID: string, taskID:string, editedTitle: string) => void
 
 }
 
 export const TasksList:React.FC<PropsTypes> = ({tasks, removeTask, changeStatus,
-                                                   filter, changeFilter, todolistID}) => {
+                                                   filter, changeFilter, todolistID, changeTaskTitle}) => {
 
     const taskElements = tasks.map(task => <Task {...task} key={task.id} removeTask={removeTask}
-                                                 changeStatus={changeStatus} todolistID={todolistID}/>)
+                                                 changeStatus={changeStatus} todolistID={todolistID}
+                                                 changeTaskTitle={changeTaskTitle}/>)
 
     const taskElementsConditionalRendering = taskElements.length ? <ul>{taskElements}</ul> : <span>Please, add tasks or change filter =)</span>
 

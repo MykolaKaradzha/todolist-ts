@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {TodolistHeader} from "./TodolistHeader/TodolistHeader";
 import {TasksList} from "./TasksList/TasksList";
 import {filterType, TasksObjType, taskType} from "../../App";
-import {Button} from "../UniversalComponents/Button/Button";
+import {MyButton} from "../UniversalComponents/Button/myButton";
 import styled from "styled-components";
 
 //styles
@@ -21,12 +21,14 @@ type propsType = {
     changeFilter: (filter:filterType, todolistID: string) => void
     filter: filterType
     removeTodolist: (todolistID: string) => void
-
+    changeTodolistTitle: (todolistID: string, editedTitle: string) => void
+    changeTaskTitle: (todolistID: string, taskID:string, editedTitle: string) => void
 }
 
 export const Todolist:React.FC<propsType> = (
     {addTask, tasks, title,
-        removeTask, changeStatus, filter, changeFilter, todolistID, removeTodolist}) => {
+        removeTask, changeStatus, filter, changeFilter,
+        todolistID, removeTodolist, changeTodolistTitle, changeTaskTitle}) => {
 
     // for collapsable tasks
     const [collapsed, setCollapsed] = useState<boolean>(true)
@@ -35,15 +37,17 @@ export const Todolist:React.FC<propsType> = (
     }
 
     return <TodolistWrapper>
-        <TodolistHeader title={title} addTask={addTask} todolistID={todolistID} removeTodolist={removeTodolist}/>
-        <Button onClick={collapsedHandler}>Show Tasks</Button>
-        {!collapsed && <TasksList todolistID={todolistID}
+        <TodolistHeader title={title} addTask={addTask}
+                        todolistID={todolistID} removeTodolist={removeTodolist} changeTodolistTitle={changeTodolistTitle}/>
+        <MyButton onClick={collapsedHandler}>Show Tasks</MyButton>
+        {!collapsed && <TasksList
+            todolistID={todolistID}
             tasks={tasks}
             removeTask={removeTask}
             changeStatus={changeStatus}
             changeFilter={changeFilter}
             filter={filter}
-
+            changeTaskTitle={changeTaskTitle}
         />}
     </TodolistWrapper>
 }

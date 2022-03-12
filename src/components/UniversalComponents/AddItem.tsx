@@ -1,20 +1,19 @@
 import React, {useState} from "react";
-import {Input} from "../../../UniversalComponents/Input/Input";
-import {Button} from "../../../UniversalComponents/Button/Button";
+import {Input} from "./Input/Input";
+import {MyButton} from "./Button/myButton";
 
 type PropsType = {
-    todolistID: string
-    addTask: (newTitle: string, todolistID: string) => void
+    callBack: (newTitle: string) => void
 }
 
-export const AddTaskForm: React.FC<PropsType> = ({addTask, todolistID}) => {
+export const AddItem: React.FC<PropsType> = ({callBack}) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
 
     const onClickButtonHandler = () => {
         if (title.trim()) {
-            addTask(title.trim(), todolistID)
+            callBack(title.trim())
             setTitle('')
         } else {
             setError('Insert title, bro!')
@@ -28,7 +27,7 @@ export const AddTaskForm: React.FC<PropsType> = ({addTask, todolistID}) => {
 
     return <div>
         <Input value={title} onChangeText={setTitle}  onFocus={onFocusHandler} onEnterPress={onClickButtonHandler}
-               error={error} placeholder={'enter your task here'}/>
-        <Button  error={error} onClick={onClickButtonHandler}>+</Button>
+               error={error}/>
+        <MyButton error={error} onClick={onClickButtonHandler}>+</MyButton>
     </div>
 }

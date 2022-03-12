@@ -6,7 +6,7 @@ type ButtonProps = DefaultButtonAttributesProps & {
     error?: string
 }
 
-export const Button:React.FC<ButtonProps> = ({className, error, ...restProps}) => {
+export const MyButton:React.FC<ButtonProps> = ({className, error, ...restProps}) => {
     const finalButtonClass = `${error ? s.error : ''} ${className ? className : ''} ${s.initialButtonClass}`
     return (
         <>

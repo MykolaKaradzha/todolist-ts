@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Todolist} from "./components/Todolist/Todolist";
 import {v1} from 'uuid';
 import styled from "styled-components";
+import {AddItem} from "./components/UniversalComponents/AddItem";
 
 
 //styles
@@ -38,11 +39,25 @@ const App: React.FC = () => {
         {id: todolistID1, title: "What to learn", filter: "active"},
         {id: todolistID2, title: "What to do", filter: "completed"}
     ])
+    const addTodolist = (newTitle: string) => {
+        let newTodolistID = v1();
+        setTodolists(
+            [{id: newTodolistID, title: newTitle, filter: 'all'}, ...todolists]
+        )
+        setTasksObj({
+            ...tasksObj, [newTodolistID]: []
+        })
+    }
 
     const removeTodolist = (todolistID: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistID))
         delete tasksObj[todolistID]
         setTasksObj({...tasksObj})
+    }
+
+    const changeTodolistTitle = (todolistID: string, editedTitle: string) => {
+        setTodolists(todolists.map(
+            todolist => todolist.id === todolistID ? {...todolist, title: editedTitle} : todolist))
     }
 
 
@@ -78,6 +93,14 @@ const App: React.FC = () => {
         )
     }
 
+    const changeTaskTitle = (todolistID: string, taskID: string, editedTitle: string) => {
+        setTasksObj({
+            ...tasksObj, [todolistID]: tasksObj[todolistID].map(task => task.id === taskID
+                ? {...task, title: editedTitle} : task)
+        })
+
+    }
+
     //function for checkbox
     const changeStatus = (id: string, isDone: boolean, todolistID: string) => {
         let tasks = tasksObj[todolistID];
@@ -108,6 +131,7 @@ const App: React.FC = () => {
 
     return (
         <AppWrapper>
+            <AddItem callBack={addTodolist}/>
             {todolists.map(todolist => {
                 const filteredTasks = filterTasks(todolist.filter, todolist.id)[todolist.id]
                 return <Todolist key={todolist.id}
@@ -120,7 +144,8 @@ const App: React.FC = () => {
                                  changeFilter={changeFilter}
                                  filter={todolist.filter}
                                  removeTodolist={removeTodolist}
-
+                                 changeTodolistTitle={changeTodolistTitle}
+                                 changeTaskTitle={changeTaskTitle}
                 />
             })}
         </AppWrapper>
