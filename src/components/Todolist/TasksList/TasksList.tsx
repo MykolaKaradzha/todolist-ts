@@ -22,7 +22,7 @@ export const TasksList:React.FC<PropsTypes> = ({tasks, removeTask, changeStatus,
                                                  changeStatus={changeStatus} todolistID={todolistID}
                                                  changeTaskTitle={changeTaskTitle}/>)
 
-    const taskElementsConditionalRendering = taskElements.length ? <ul>{taskElements}</ul> : <span>Please, add tasks or change filter =)</span>
+    const taskElementsConditionalRendering = taskElements.length ? <ul>{taskElements}</ul> : <div>Please, add tasks or change filter =)</div>
 
     return <>
         {taskElementsConditionalRendering}

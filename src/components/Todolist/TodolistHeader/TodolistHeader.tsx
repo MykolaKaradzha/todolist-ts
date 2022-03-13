@@ -1,8 +1,8 @@
 import React from "react";
-
-import {MyButton} from "../../UniversalComponents/Button/myButton";
 import {AddItem} from "../../UniversalComponents/AddItem";
 import {EditableSpan} from "../../UniversalComponents/EditableSpan";
+import {IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 type PropsType = {
     todolistID: string
@@ -28,7 +28,9 @@ export const TodolistHeader: React.FC<PropsType> = ({title, addTask, todolistID,
 
     return <>
         <h3><EditableSpan oldTitle={title} callBack={changeTodolistTitleHandler}/>
-            <MyButton onClick={removeTodolistHandler}>X</MyButton>
+            <IconButton onClick={removeTodolistHandler} size="small">
+                <Delete fontSize="small" />
+            </IconButton>
         </h3>
         <AddItem callBack={addTaskHandler}/>
     </>

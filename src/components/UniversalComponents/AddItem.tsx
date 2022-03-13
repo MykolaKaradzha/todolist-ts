@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {Input} from "./Input/Input";
-import {MyButton} from "./Button/myButton";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Icon, IconButton, TextField} from "@mui/material";
+import {deepPurple, purple} from "@mui/material/colors";
 
 type PropsType = {
     callBack: (newTitle: string) => void
@@ -16,18 +16,29 @@ export const AddItem: React.FC<PropsType> = ({callBack}) => {
             callBack(title.trim())
             setTitle('')
         } else {
-            setError('Insert title, bro!')
+            setError('Enter title!')
         }
 
     }
     const onFocusHandler = () => {
         setError('')
     }
+    const onChangeTextHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.currentTarget.value)
+    }
+    const onEnterPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        event.key === 'Enter' && onClickButtonHandler()
+    }
 
 
-    return <div>
-        <Input value={title} onChangeText={setTitle}  onFocus={onFocusHandler} onEnterPress={onClickButtonHandler}
-               error={error}/>
-        <MyButton error={error} onClick={onClickButtonHandler}>+</MyButton>
-    </div>
+    return <>
+        <TextField variant= {'outlined'} value={title} onChange={onChangeTextHandler}
+                   onFocus={onFocusHandler} onKeyPress={onEnterPressHandler}
+                   label="Title"
+                   helperText={error}
+                   error={!!error}/>
+        <IconButton onClick={onClickButtonHandler}>
+            <Icon sx={{ color: deepPurple[500] }}>add_circle</Icon>
+        </IconButton>
+    </>
 }

@@ -1,14 +1,15 @@
 import React, {useState} from "react";
 import {TodolistHeader} from "./TodolistHeader/TodolistHeader";
 import {TasksList} from "./TasksList/TasksList";
-import {filterType, TasksObjType, taskType} from "../../App";
-import {MyButton} from "../UniversalComponents/Button/myButton";
-import styled from "styled-components";
+import {filterType, taskType} from "../../App";
+// import styled from "styled-components";
+import {IconButton} from "@mui/material";
+import {ExpandLessTwoTone, ExpandMoreTwoTone} from "@mui/icons-material";
 
 //styles
-const TodolistWrapper = styled.div`
-  margin-left: 50px;
-`
+// const TodolistWrapper = styled.div`
+//   margin-left: 50px;
+// `
 
 
 type propsType = {
@@ -31,15 +32,19 @@ export const Todolist:React.FC<propsType> = (
         todolistID, removeTodolist, changeTodolistTitle, changeTaskTitle}) => {
 
     // for collapsable tasks
-    const [collapsed, setCollapsed] = useState<boolean>(true)
+    const [collapsed, setCollapsed] = useState<boolean>(false)
     const collapsedHandler = () => {
         setCollapsed(!collapsed)
     }
 
-    return <TodolistWrapper>
+    return <>
         <TodolistHeader title={title} addTask={addTask}
                         todolistID={todolistID} removeTodolist={removeTodolist} changeTodolistTitle={changeTodolistTitle}/>
-        <MyButton onClick={collapsedHandler}>Show Tasks</MyButton>
+
+        <IconButton  onClick={collapsedHandler}>
+            {collapsed && <ExpandLessTwoTone/>}
+            {!collapsed && <ExpandMoreTwoTone/>}
+        </IconButton>
         {!collapsed && <TasksList
             todolistID={todolistID}
             tasks={tasks}
@@ -49,5 +54,5 @@ export const Todolist:React.FC<propsType> = (
             filter={filter}
             changeTaskTitle={changeTaskTitle}
         />}
-    </TodolistWrapper>
+    </>
 }
