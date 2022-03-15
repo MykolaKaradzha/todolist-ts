@@ -36,7 +36,9 @@ export const AddItem: React.FC<PropsType> = ({callBack}) => {
                    onFocus={onFocusHandler} onKeyPress={onEnterPressHandler}
                    label="Title"
                    helperText={error}
-                   error={!!error}/>
+                   error={!!error}
+                   size='small'
+        />
         <IconButton onClick={onClickButtonHandler}>
             <Icon sx={{ color: deepPurple[500] }}>add_circle</Icon>
         </IconButton>
