@@ -24,7 +24,7 @@ export type taskType = {
     isDone: boolean
 }
 export type filterType = "all" | "active" | "completed"
-type todolistType = {
+export type todolistType = {
     id: string
     title: string
     filter: filterType
@@ -53,13 +53,19 @@ const App: React.FC = () => {
 
     const removeTodolist = (todolistID: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistID))
-        delete tasksObj[todolistID]
-        setTasksObj({...tasksObj})
+        const tasksObjCopy = {...tasksObj}
+        delete tasksObjCopy[todolistID]
+        setTasksObj({...tasksObjCopy})
     }
 
     const changeTodolistTitle = (todolistID: string, editedTitle: string) => {
         setTodolists(todolists.map(
             todolist => todolist.id === todolistID ? {...todolist, title: editedTitle} : todolist))
+    }
+
+    const changeFilter = (filter: filterType, todolistID: string) => {
+        setTodolists(todolists.map(
+            todolist => todolist.id === todolistID ? {...todolist, filter: filter} : todolist))
     }
 
 
@@ -125,10 +131,7 @@ const App: React.FC = () => {
                 return tasksObj;
         }
     }
-    const changeFilter = (filter: filterType, todolistID: string) => {
-        setTodolists(todolists.map(
-            todolist => todolist.id === todolistID ? {...todolist, filter: filter} : todolist))
-    }
+
 
 
     return (
