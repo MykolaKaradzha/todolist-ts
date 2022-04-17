@@ -21,7 +21,7 @@ export const EditableSpan:React.FC<PropsType> = ({oldTitle, callBack}) => {
         setTitle(event.currentTarget.value)
     }
     return (
-            edited ? <TextField value={title} onChange={onChangeHandler} autoFocus onBlur={onBlurHandler}/>
+            edited ? <TextField value={title} onChange={onChangeHandler} autoFocus onBlur={onBlurHandler} size='small'/>
                 : <span onDoubleClick={onDoubleClickHandler}>{title}</span>
     );
 };

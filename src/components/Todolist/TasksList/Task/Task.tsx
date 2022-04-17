@@ -38,7 +38,7 @@ export const Task:React.FC<PropsType> = ({title, id, isDone,
                                   label={
                     <>
                         <EditableSpan oldTitle={title} callBack={changeTaskTitleHandler}/>
-                                      <IconButton onClick={onClickRemoveTaskHandler} size="small">
+                                      <IconButton onClick={onClickRemoveTaskHandler} size="small" color='error'>
                                       <Delete fontSize="small" />
                                       </IconButton>
                     </>
