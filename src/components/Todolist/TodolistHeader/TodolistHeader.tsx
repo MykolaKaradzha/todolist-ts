@@ -16,6 +16,7 @@ type PropsType = {
 export const TodolistHeader: React.FC<PropsType> = ({title, addTask, todolistID,
                                                         removeTodolist, changeTodolistTitle}) => {
     const removeTodolistHandler = () => {
+        debugger;
         removeTodolist(todolistID)
     }
     const addTaskHandler = (newTitle: string) => {

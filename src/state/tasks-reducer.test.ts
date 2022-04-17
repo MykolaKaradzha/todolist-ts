@@ -4,7 +4,6 @@ import {
     addTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
-    filterTasksAC,
     removeTaskAC,
     tasksReducer
 } from "./tasks-reducer";
@@ -34,7 +33,7 @@ beforeEach(() => {
 test("task should be added", () => {
 
     const title = "Hey, I`m new task!"
-    const newTasksObj = tasksReducer(oldTasksObj, addTaskAC(todolistID2, title))
+    const newTasksObj = tasksReducer(oldTasksObj, addTaskAC(title, todolistID2))
 
     expect(oldTasksObj[todolistID2].length).toBe(2);
     expect(newTasksObj[todolistID2].length).toBe(3);
@@ -45,7 +44,7 @@ test("task should be added", () => {
 });
 test("task should be removed", () => {
 
-    const newTasksObj = tasksReducer(oldTasksObj, removeTaskAC(todolistID1, "1"))
+    const newTasksObj = tasksReducer(oldTasksObj, removeTaskAC( "1", todolistID1))
 
     expect(oldTasksObj[todolistID1].length).toBe(2);
     expect(newTasksObj[todolistID1].length).toBe(1);
@@ -65,27 +64,10 @@ test("task title should be changed", () => {
 test("task status should be changed", () => {
 
     const newStatus = false;
-    const newTasksObj = tasksReducer(oldTasksObj, changeTaskStatusAC(todolistID1, "1", newStatus));
+    const newTasksObj = tasksReducer(oldTasksObj, changeTaskStatusAC("1", newStatus, todolistID1));
 
     expect(oldTasksObj[todolistID1][0].isDone).toBeTruthy()
     expect(newTasksObj[todolistID1][0].isDone).toBeFalsy()
-})
-
-test("tasks should be filtered", () => {
-
-    const filterAll = 'all';
-    const filterActive = 'active';
-    const filterCompleted = 'completed';
-
-    const tasksFilteredAll = tasksReducer(oldTasksObj, filterTasksAC(todolistID1, filterAll));
-    const tasksFilteredActive = tasksReducer(oldTasksObj, filterTasksAC(todolistID1, filterActive));
-    const tasksFilteredCompleted = tasksReducer(oldTasksObj, filterTasksAC(todolistID1, filterCompleted));
-
-    expect(oldTasksObj[todolistID1].length).toBe(2)
-    expect(tasksFilteredAll[todolistID1].length).toBe(2)
-    expect(tasksFilteredActive[todolistID1].findIndex(task => task.isDone === true)).toBe(-1)
-    expect(tasksFilteredCompleted[todolistID1].findIndex(task => task.isDone !== true)).toBe(-1)
-
 })
 
 test ("tasks array for todolist should be added", () => {

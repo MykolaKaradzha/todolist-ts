@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createGlobalStyle} from "styled-components";
+import AppWithReducers from "./AppWithReducers";
+import App from "./App";
 
 const Global = createGlobalStyle`
 *{
@@ -13,11 +14,11 @@ const Global = createGlobalStyle`
 }
 `
 
-ReactDOM.render(<>
+ReactDOM.render(
+    <>
     <Global/>
-    <App/>
-    </>,
-    document.getElementById('root'));
+    <AppWithReducers/>
+</>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

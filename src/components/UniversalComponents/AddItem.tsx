@@ -7,16 +7,16 @@ type PropsType = {
 }
 
 export const AddItem: React.FC<PropsType> = ({callBack}) => {
-    const [title, setTitle] = useState<string>('')
+    const [newTitle, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
 
     const onClickButtonHandler = () => {
-        if (title.trim()) {
-            callBack(title.trim())
+        if (newTitle.trim()) {
+            callBack(newTitle.trim())
             setTitle('')
         } else {
-            setError('Enter title!')
+            setError('Enter newTitle!')
         }
 
     }
@@ -32,7 +32,7 @@ export const AddItem: React.FC<PropsType> = ({callBack}) => {
 
 
     return <>
-        <TextField variant= {'outlined'} value={title} onChange={onChangeTextHandler}
+        <TextField variant= {'outlined'} value={newTitle} onChange={onChangeTextHandler}
                    onFocus={onFocusHandler} onKeyPress={onEnterPressHandler}
                    label="Title"
                    helperText={error}
