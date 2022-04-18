@@ -1,6 +1,6 @@
 import {filterType, TasksObjType} from "../App"
 import {v1} from "uuid";
-import {addTodolistACType, removeTodolistACType} from "./todolist-reducer";
+import {addTodolistACType, removeTodolistACType, todolistID1, todolistID2} from "./todolist-reducer";
 
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type removeTaskACType = ReturnType<typeof removeTaskAC>;
@@ -13,9 +13,22 @@ type ActionType =
     | changeTaskStatusACType
     | addTodolistACType
     | removeTodolistACType
-let initState: TasksObjType = {}
+let initState: TasksObjType = {
+    [todolistID1]: [
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "React", isDone: false},
+        {id: v1(), title: "Vue", isDone: false},
+    ],
+    [todolistID2]: [
+        {id: v1(), title: "Earn some money", isDone: false},
+        {id: v1(), title: "Leave Russia for good", isDone: true},
+        {id: v1(), title: "Help people", isDone: false},
+        {id: v1(), title: "Never give up", isDone: false},
+    ]
+}
 
-export const tasksReducer = (state = initState, action: ActionType) : TasksObjType => {
+export const tasksReducer = (state:TasksObjType = initState, action: ActionType) : TasksObjType => {
     switch (action.type) {
         case "ADD-TASK":
             return {
@@ -23,7 +36,7 @@ export const tasksReducer = (state = initState, action: ActionType) : TasksObjTy
                     [{id: v1(), title: action.payload.newTitle, isDone: false}, ...state[action.payload.todolistID]]
             };
         case "REMOVE-TASK":
-            debugger;
+
             return {
                 ...state, [action.payload.todolistID]:
                     state[action.payload.todolistID].filter(task => task.id !== action.payload.taskID)
@@ -38,7 +51,7 @@ export const tasksReducer = (state = initState, action: ActionType) : TasksObjTy
                         } : task)
             };
         case "CHANGE-TASK-STATUS":
-            debugger;
+
             return {
                 ...state, [action.payload.todolistID]:
                     state[action.payload.todolistID]
@@ -56,7 +69,7 @@ export const tasksReducer = (state = initState, action: ActionType) : TasksObjTy
             delete stateCopy[action.payload.id];
             return stateCopy
         default:
-            throw new Error('No such type found!')
+            return state;
     }
 }
 

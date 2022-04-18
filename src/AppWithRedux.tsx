@@ -1,6 +1,5 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 import {Todolist} from "./components/Todolist/Todolist";
-import {v1} from 'uuid';
 import {AddItem} from "./components/UniversalComponents/AddItem";
 import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
@@ -9,15 +8,15 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    todolistReducer
 } from "./state/todolist-reducer";
 import {
     addTaskAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    tasksReducer
 } from "./state/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./state/store";
 
 
 
@@ -37,64 +36,48 @@ export type TasksObjType = {
     [key: string]: Array<taskType>
 }
 
-function AppWithReducers () {
-    // Todolists
-    const todolistID1 = v1();
-    const todolistID2 = v1();
-    const [todolists, dispatchTodolists] = useReducer(todolistReducer, [
-        {id: todolistID1, title: "What to learn", filter: "all"},
-        {id: todolistID2, title: "What to do", filter: "all"}
-    ])
-    const [tasksObj, dispatchTasksObj] = useReducer(tasksReducer, {
-        [todolistID1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
-            {id: v1(), title: "Vue", isDone: false},
-        ],
-        [todolistID2]: [
-            {id: v1(), title: "Earn some money", isDone: false},
-            {id: v1(), title: "Leave Russia for good", isDone: true},
-            {id: v1(), title: "Help people", isDone: false},
-            {id: v1(), title: "Never give up", isDone: false},
-        ]
-    })
+function AppWithRedux () {
+
+    const todolists = useSelector<AppRootState, Array<todolistType>>(state => state.todolists)
+    const tasksObj = useSelector<AppRootState, TasksObjType>(state => state.tasks)
+    const dispatch = useDispatch()
+
     const addTodolist = (newTitle: string) => {
         let action = addTodolistAC(newTitle);
-        dispatchTasksObj(action)
-        dispatchTodolists(action)
+        dispatch(action)
+
     }
 
     const removeTodolist = (todolistID: string) => {
         let action = removeTodolistAC(todolistID);
-        dispatchTasksObj(action);
-        dispatchTodolists(action);
+        dispatch(action);
+
     }
 
     const changeTodolistTitle = (todolistID: string, editedTitle: string) => {
-        dispatchTodolists(changeTodolistTitleAC(todolistID, editedTitle));
+        dispatch(changeTodolistTitleAC(todolistID, editedTitle));
 
     }
     const changeFilter = (filter: filterType, todolistID: string) => {
-        dispatchTodolists(changeTodolistFilterAC(todolistID, filter))
+        dispatch(changeTodolistFilterAC(todolistID, filter))
     }
 
     const addTask = (newTitle: string, todolistID: string) => {
-        dispatchTasksObj(addTaskAC(newTitle, todolistID))
+        dispatch(addTaskAC(newTitle, todolistID))
     }
 
     const removeTask = (id: string, todolistID: string) => {
-        dispatchTasksObj(removeTaskAC(id, todolistID))
+        dispatch(removeTaskAC(id, todolistID))
     }
 
     const changeTaskTitle = (todolistID: string, taskID: string, editedTitle: string) => {
 
-        dispatchTasksObj(changeTaskTitleAC(todolistID, taskID, editedTitle))
+        dispatch(changeTaskTitleAC(todolistID, taskID, editedTitle))
     }
 
     //function for checkbox
     const changeStatus = (id: string, isDone: boolean, todolistID: string) => {
-        dispatchTasksObj(changeTaskStatusAC(id, isDone, todolistID))
+        dispatch(changeTaskStatusAC(id, isDone, todolistID))
     }
 
     //for filter buttons
@@ -140,7 +123,6 @@ function AppWithReducers () {
                         {
                             todolists.map(todolist => {
                                 const filteredTasks = filterTasks(todolist.filter, todolist.id)[todolist.id];
-                                debugger;
                                 return (
                                     <Grid item key={todolist.id}>
                                         <Paper elevation={3} sx={{padding: 3}}>
@@ -166,4 +148,4 @@ function AppWithReducers () {
             </>
         )
     }
-export default AppWithReducers
+export default AppWithRedux
