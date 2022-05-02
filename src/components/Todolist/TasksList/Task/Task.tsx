@@ -1,9 +1,9 @@
-import React, {ChangeEvent, FormEvent, FormEventHandler} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {taskType} from "../../../../App";
 import s from "./Task.module.css"
 import {EditableSpan} from "../../../UniversalComponents/EditableSpan";
 import {Checkbox, FormControlLabel, FormGroup, IconButton} from "@mui/material";
-import { Delete} from "@mui/icons-material";
+import {Delete} from "@mui/icons-material";
 
 
 
@@ -25,14 +25,11 @@ export const Task:React.FC<PropsType> = ({title, id, isDone,
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         changeStatus(id, event.currentTarget.checked, todolistID)
     }
-    const changeTaskTitleHandler = (editedTitle: string) => {
-        changeTaskTitle(todolistID, id, editedTitle)
-    }
+    const changeTaskTitleHandler = useCallback((editedTitle: string) => {
+        changeTaskTitle(todolistID, id, editedTitle)}, [changeTaskTitle, todolistID, id])
+
     return (
         <div className={completedTasksClass}>
-            {/*<CheckBox onChange={onChangeHandler} checked={isDone}>*/}
-            {/*    <EditableSpan oldTitle={title} callBack={changeTaskTitleHandler}/>*/}
-            {/*</CheckBox>*/}
             <FormGroup>
                 <FormControlLabel control={<Checkbox onChange={onChangeHandler} checked={isDone}/>}
                                   label={

@@ -6,7 +6,8 @@ type PropsType = {
     callBack: (editedTitle: string) => void
 }
 
-export const EditableSpan:React.FC<PropsType> = ({oldTitle, callBack}) => {
+export const EditableSpan:React.FC<PropsType> = React.memo(({oldTitle, callBack}) => {
+    console.log('ES called')
     const [edited, setEdited] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(oldTitle)
 
@@ -24,5 +25,5 @@ export const EditableSpan:React.FC<PropsType> = ({oldTitle, callBack}) => {
             edited ? <TextField value={title} onChange={onChangeHandler} autoFocus onBlur={onBlurHandler} size='small'/>
                 : <span onDoubleClick={onDoubleClickHandler}>{title}</span>
     );
-};
+});
 

@@ -1,12 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Icon, IconButton, TextField} from "@mui/material";
-import {deepPurple, purple} from "@mui/material/colors";
+import {deepPurple} from "@mui/material/colors";
 
 type PropsType = {
     callBack: (newTitle: string) => void
 }
 
-export const AddItem: React.FC<PropsType> = ({callBack}) => {
+export const AddItem: React.FC<PropsType> = React.memo(({callBack}) => {
+    console.log('AddItem called')
     const [newTitle, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -21,9 +22,12 @@ export const AddItem: React.FC<PropsType> = ({callBack}) => {
 
     }
     const onFocusHandler = () => {
-        setError('')
+
+        error && setError('')
+
     }
     const onChangeTextHandler = (event: ChangeEvent<HTMLInputElement>) => {
+
         setTitle(event.currentTarget.value)
     }
     const onEnterPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -43,4 +47,4 @@ export const AddItem: React.FC<PropsType> = ({callBack}) => {
             <Icon sx={{ color: deepPurple[500] }}>add_circle</Icon>
         </IconButton>
     </>
-}
+});

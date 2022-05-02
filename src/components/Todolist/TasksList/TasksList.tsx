@@ -2,7 +2,7 @@ import {Task} from "./Task/Task";
 import React from "react";
 
 import {Buttons} from "./Buttons/Buttons";
-import {filterType, TasksObjType, taskType} from "../../../App";
+import {filterType,taskType} from "../../../App";
 
 type PropsTypes = {
     todolistID: string

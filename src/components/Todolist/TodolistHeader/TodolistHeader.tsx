@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {AddItem} from "../../UniversalComponents/AddItem";
 import {EditableSpan} from "../../UniversalComponents/EditableSpan";
 import {IconButton} from "@mui/material";
@@ -13,14 +13,14 @@ type PropsType = {
 
 }
 
-export const TodolistHeader: React.FC<PropsType> = ({title, addTask, todolistID,
+export const TodolistHeader: React.FC<PropsType> = React.memo(({title, addTask, todolistID,
                                                         removeTodolist, changeTodolistTitle}) => {
     const removeTodolistHandler = () => {
         removeTodolist(todolistID)
     }
-    const addTaskHandler = (newTitle: string) => {
+    const addTaskHandler = useCallback((newTitle: string) => {
             addTask(newTitle, todolistID)
-    }
+    }, [addTask, todolistID])
     const changeTodolistTitleHandler = (editedTitle: string) => {
         changeTodolistTitle(todolistID, editedTitle)
     }
@@ -34,4 +34,4 @@ export const TodolistHeader: React.FC<PropsType> = ({title, addTask, todolistID,
         </h3>
         <AddItem callBack={addTaskHandler}/>
     </>
-}
+})

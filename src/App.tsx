@@ -34,6 +34,7 @@ export type TasksObjType = {
 }
 
 const App: React.FC = () => {
+
     // Todolists
     const todolistID1 = v1();
     const todolistID2 = v1();
@@ -118,22 +119,6 @@ const App: React.FC = () => {
             }
         )
     }
-
-    //for filter buttons
-    const filterTasks = (filter: filterType, todolistID: string) => {
-        let tasks = tasksObj[todolistID];
-        switch (filter) {
-            case "completed":
-                return {[todolistID]: tasks.filter(task => task.isDone)}
-            case "active":
-                return {[todolistID]: tasks.filter(task => !task.isDone)}
-            default:
-                return tasksObj;
-        }
-    }
-
-
-
     return (
         <>
             <Box sx={{flexGrow: 1}}>
@@ -164,14 +149,13 @@ const App: React.FC = () => {
                 <Grid container spacing={5}>
                     {
                         todolists.map(todolist => {
-                            const filteredTasks = filterTasks(todolist.filter, todolist.id)[todolist.id]
                             return (
                                 <Grid item>
                                     <Paper elevation={3} sx={{padding:3}}>
                                 <Todolist key={todolist.id}
                                           todolistID={todolist.id}
                                           title={todolist.title}
-                                          tasks={filteredTasks}
+                                          tasks={tasksObj[todolist.id]}
                                           addTask={addTask}
                                           removeTask={removeTask}
                                           changeStatus={changeStatus}

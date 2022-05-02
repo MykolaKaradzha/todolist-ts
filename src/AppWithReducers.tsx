@@ -97,18 +97,7 @@ function AppWithReducers () {
         dispatchTasksObj(changeTaskStatusAC(id, isDone, todolistID))
     }
 
-    //for filter buttons
-    const filterTasks = (filter: filterType, todolistID: string) => {
-        let tasks = tasksObj[todolistID];
-        switch (filter) {
-            case "completed":
-                return {[todolistID]: tasks.filter(task => task.isDone)}
-            case "active":
-                return {[todolistID]: tasks.filter(task => !task.isDone)}
-            default:
-                return tasksObj;
-        }
-    }
+
         return (
             <>
                 <Box sx={{flexGrow: 1}}>
@@ -139,7 +128,6 @@ function AppWithReducers () {
                     <Grid container spacing={5}>
                         {
                             todolists.map(todolist => {
-                                const filteredTasks = filterTasks(todolist.filter, todolist.id)[todolist.id];
                                 debugger;
                                 return (
                                     <Grid item key={todolist.id}>
@@ -147,7 +135,7 @@ function AppWithReducers () {
                                             <Todolist key={todolist.id}
                                                       todolistID={todolist.id}
                                                       title={todolist.title}
-                                                      tasks={filteredTasks}
+                                                      tasks={tasksObj[todolist.id]}
                                                       addTask={addTask}
                                                       removeTask={removeTask}
                                                       changeStatus={changeStatus}
