@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Icon, IconButton, TextField} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
+import {AddCircle} from "@mui/icons-material";
 
 type PropsType = {
     callBack: (newTitle: string) => void
@@ -44,7 +45,7 @@ export const AddItem: React.FC<PropsType> = React.memo(({callBack}) => {
                    size='small'
         />
         <IconButton onClick={onClickButtonHandler}>
-            <Icon sx={{ color: deepPurple[500] }}>add_circle</Icon>
+            <AddCircle sx={{ color: deepPurple[500] }}/>
         </IconButton>
     </>
 });
